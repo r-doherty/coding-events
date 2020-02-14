@@ -10,21 +10,28 @@ public class Event {
     private int id;
     private static int nextId = 1;
 
-    @NotBlank
-    @Size(min=3, max=50, message = "Name must be between 3 and 50 characters.")
+    @NotBlank(message = "Name is required")
+    @Size(min=3, max=50, message = "Name must be between 3 and 50 characters")
     private String name;
 
     @Size(max=500, message = "Description too long!")
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Email is required")
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    private EventType type;
+
+    public Event(String name, String description, String contactEmail, EventType type) {
+        this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.type = type;
+    }
+
+    public Event() {
         this.id = nextId;
         nextId++;
     }
@@ -55,6 +62,18 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
     }
 
     @Override
