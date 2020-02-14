@@ -1,8 +1,6 @@
 package org.launchcode.codingevents.models;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 /**
@@ -24,11 +22,30 @@ public class Event {
     @Email(message = "Invalid email. Try again.")
     private String contactEmail;
 
-    public Event(String name, String description, String contactEmail) {
+    @NotBlank(message = "Address is required")
+    @NotNull(message = "Invalid address. Try again")
+    private String address;
+
+    @AssertTrue(message = "Registration must be 'true'")
+    private boolean registration;
+
+    @Positive(message="Attendee value must be positive and greater than 0")
+    private int attendance;
+
+    @NotBlank(message="Website cannot be left blank")
+    @NotNull(message="Invalid website, please try again")
+    @Size(min=4, max=30, message="Website must be between 4 and 30 characters")
+    private String website;
+
+    public Event(String name, String description, String contactEmail, String address, boolean registration, int attendance, String website) {
         this();
         this.name = name;
         this.description = description;
         this.contactEmail = contactEmail;
+        this.address = address;
+        this.registration = registration;
+        this.attendance = attendance;
+        this.website = website;
     }
 
     public Event() {
@@ -58,6 +75,38 @@ public class Event {
 
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(boolean registration) {
+        this.registration = registration;
+    }
+
+    public int getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(int attendance) {
+        this.attendance = attendance;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
     public int getId() {
