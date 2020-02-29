@@ -1,16 +1,19 @@
 # coding-events
 
 -- App Purpose 
+
 This is a simple web-app aimed at providing an outlet for listing various coding events,
 and details about said events including contact e-mail, a brief description, and various
 tag and category determinations. Built with Java and liked to MySQL database.
 
 -- Current State of the App
+
 The app currently allows users to create events, including inputting information for their
 descriptions, contact emails, and categories. Users can also delete said events and create
 custom options for the categories which events can be designated into.
 
 -- Future Improvements
+
 The first major overhaul of this app would need to be creating a 'User base' by adding a'Person'
 class. This means implementing an authentication and login process for individuals to have
 unique access to moderating their designated events or event listings. This would require creating
