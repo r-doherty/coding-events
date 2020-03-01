@@ -2,8 +2,10 @@ package org.launchcode.codingevents.controllers;
 
 import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
+import org.launchcode.codingevents.data.TagRepository;
 import org.launchcode.codingevents.models.Event;
 import org.launchcode.codingevents.models.EventCategory;
+import org.launchcode.codingevents.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,13 +28,17 @@ public class EventController {
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
 
-    @GetMapping
-    public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
+    @Autowired
+    private TagRepository tagRepository;
 
-        if (categoryId == null) {
+    @GetMapping
+    public String displayEvents(@RequestParam(required = false) Integer categoryId, @RequestParam(required = false) Integer tagId, Model model) {
+
+        if (categoryId == null && tagId == null) {
             model.addAttribute("title", "All Events");
             model.addAttribute("events", eventRepository.findAll());
-        } else {
+        }
+        else if (categoryId != null) {
             Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
             if (result.isEmpty()) {
                 model.addAttribute("title", "Invalid Category ID: " + categoryId);
@@ -42,6 +48,18 @@ public class EventController {
                 model.addAttribute("events", category.getEvents());
             }
         }
+        else
+        {
+            Optional<Tag> result = tagRepository.findById(tagId);
+            if (result.isEmpty()) {
+                model.addAttribute("title", "Invalid Tag ID: " + tagId);
+            } else {
+                Tag tag = result.get();
+                model.addAttribute("title", "Events with tag: " + tag.getName());
+                model.addAttribute("events", tag.getEvents());
+            }
+        }
+
 
         return "events/index";
     }
